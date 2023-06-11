@@ -14,21 +14,19 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    def delete(self, request, pk):
-        product = get_object_or_404(Product, pk=pk)
+    def destroy(self, *args, **kwargs):
+        product = self.get_object()
         if product.orderitems.count() > 0:
             return Response({'error': 'Product cannot be deleted because it is associated with an order item.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return super().destroy(self, *args, **kwargs)
 
 
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('product')).all()
     serializer_class = CollectionSerializer
 
-    def delete(self, request, pk):
-        collection = get_object_or_404(Collection, pk=pk)
+    def destroy(self, request, *args, **kwargs):
+        collection = self.get_object()
         if collection.product_set.count() > 0:
             return Response({'error': 'Collection cannot be deleted because it includes one or more products.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        collection.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return super().destroy(request, *args, **kwargs)
