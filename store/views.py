@@ -11,9 +11,10 @@ from .filters import ProductFilter
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_class = ProductFilter
     search_fields = ["title"]
+    ordering_fields = ['title', "last_update", "unit_price"]
 
     def destroy(self, *args, **kwargs):
         product = self.get_object()
