@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.viewsets import GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Collection, Product, Review, Cart
-from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
+from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer
 from .filters import ProductFilter
 
 
