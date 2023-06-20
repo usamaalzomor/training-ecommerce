@@ -39,4 +39,6 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['id']
+        fields = ['id', 'items']
+
+        git commit -m "refactor(store): Add fields to CartSerializer"
