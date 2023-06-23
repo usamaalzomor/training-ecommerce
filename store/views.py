@@ -1,9 +1,9 @@
 from django.db.models.aggregates import Count
+from django.db.models import F
 from rest_framework.response import Response
 from rest_framework import status, filters
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.mixins import CreateModelMixin
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Collection, Product, Review, Cart
 from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer
@@ -48,6 +48,6 @@ class ReviewViewSet(ModelViewSet):
         return {'product_id': self.kwargs['product_pk']}
     
 
-class CartViewSet(CreateModelMixin, GenericViewSet):
+class CartViewSet(CreateModelMixin, GenericViewSet, RetrieveModelMixin):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
