@@ -1,5 +1,5 @@
 from django.db.models.aggregates import Count
-from django.db.models import F
+from django.db.models import Prefetch
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -8,7 +8,7 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyM
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters.rest_framework import DjangoFilterBackend
 from store.permissions import IsAdminOrReadOnly
-from .models import Collection, Customer, Product, Review, Cart, CartItem, Order
+from .models import Collection, Customer, Product, Review, Cart, CartItem, Order, OrderItem
 from .serializers import CustomerSerializer, OrderSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from .filters import ProductFilter
 from .pagination import DefaultPagination
@@ -102,5 +102,6 @@ class CustomerViewSet(ModelViewSet):
         
 
 class OrderViewSet(ModelViewSet):
-    queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    prefetch = Prefetch('items', queryset=OrderItem.objects.select_related('product'))
+    queryset = Order.objects.prefetch_related(prefetch).all()
