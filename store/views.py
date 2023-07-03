@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters.rest_framework import DjangoFilterBackend
 from store.permissions import IsAdminOrReadOnly
 from .models import Collection, Customer, Product, Review, Cart, CartItem, Order, OrderItem
-from .serializers import CustomerSerializer, OrderSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from .serializers import CustomerSerializer, OrderSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CreateOrderSerializer
 from .filters import ProductFilter
 from .pagination import DefaultPagination
 
@@ -102,8 +102,15 @@ class CustomerViewSet(ModelViewSet):
         
 
 class OrderViewSet(ModelViewSet):
-    serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateOrderSerializer
+        return OrderSerializer
+
+    def get_serializer_context(self):
+        return {'user_id': self.request.user.id}
 
     def get_queryset(self):
         user = self.request.user
