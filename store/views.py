@@ -8,8 +8,8 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyM
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters.rest_framework import DjangoFilterBackend
 from store.permissions import IsAdminOrReadOnly
-from .models import Collection, Customer, Product, Review, Cart, CartItem, Order, OrderItem
-from .serializers import CustomerSerializer, OrderSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CreateOrderSerializer, UpdateOrderSerializer
+from .models import Collection, Customer, Product, ProductImage, Review, Cart, CartItem, Order, OrderItem
+from .serializers import CustomerSerializer, OrderSerializer, ProductImageSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CreateOrderSerializer, UpdateOrderSerializer
 from .filters import ProductFilter
 from .pagination import DefaultPagination
 
@@ -135,3 +135,13 @@ class OrderViewSet(ModelViewSet):
         
         customer_id = Customer.objects.only('id').get(user_id=user.id)
         return Order.objects.prefetch_related(prefetch).filter(customer_id=customer_id)
+
+
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+
+    def get_queryset(self):
+        return ProductImage.objects.filter(product_id = self.kwargs['product_pk'])
+    
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
