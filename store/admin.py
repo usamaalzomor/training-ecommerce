@@ -132,4 +132,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
     list_display = ['id', 'placed_at', 'customer']
 
+
 # smtp
+
+# smtp 2
