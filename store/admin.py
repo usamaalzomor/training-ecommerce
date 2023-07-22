@@ -144,3 +144,5 @@ class OrderAdmin(admin.ModelAdmin):
 # smtp 5
 
 # smtp 6
+
+# smtp 7
