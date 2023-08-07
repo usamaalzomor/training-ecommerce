@@ -33,7 +33,6 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip pipenv
-        cd e-commerce  # This is the precautionary step
         pipenv install --deploy --ignore-pipfile
       
     - name: Lint with Flake8
