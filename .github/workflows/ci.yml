@@ -53,8 +53,8 @@ jobs:
             'default': {
                 'ENGINE': 'django.db.backends.mysql',
                 'NAME': 'training-ecommerce',
-                'USER': 'root',
-                'PASSWORD': 'Osa_05910120',
+                'USER': 'testuser',
+                'PASSWORD': 'testpass',
                 'HOST': '127.0.0.1',
                 'PORT': '3306',
             }
