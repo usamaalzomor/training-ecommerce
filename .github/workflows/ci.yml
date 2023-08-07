@@ -16,8 +16,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: Osa_05910120
           MYSQL_DATABASE: mydb
-          MYSQL_USER: testuser
-          MYSQL_PASSWORD: testpass
+          MYSQL_USER: test
+          MYSQL_PASSWORD:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
@@ -53,12 +53,12 @@ jobs:
             'default': {
                 'ENGINE': 'django.db.backends.mysql',
                 'NAME': 'training-ecommerce',
-                'USER': 'testuser',
-                'PASSWORD': 'testpass',
+                'USER': 'test',
+                'PASSWORD': '',
                 'HOST': '127.0.0.1',
                 'PORT': '3306',
             }
-        }" >> myproject/settings.py
+        }" >> ecommerce/settings.py
 
     - name: Run Tests
       run: |
