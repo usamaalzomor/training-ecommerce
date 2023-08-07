@@ -47,18 +47,18 @@ jobs:
         python -m pip install --upgrade pip pipenv
         pipenv install --deploy --ignore-pipfile
 
-    - name: Configure MySQL Connection for Django
-      run: |
-        echo "DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': 'training-ecommerce',
-                'USER': 'test',
-                'PASSWORD': '',
-                'HOST': '127.0.0.1',
-                'PORT': '3306',
-            }
-        }" >> ecommerce/settings.py
+    # - name: Configure MySQL Connection for Django
+    #   run: |
+    #     echo "DATABASES = {
+    #         'default': {
+    #             'ENGINE': 'django.db.backends.mysql',
+    #             'NAME': 'training-ecommerce',
+    #             'USER': 'test',
+    #             'PASSWORD': '',
+    #             'HOST': '127.0.0.1',
+    #             'PORT': '3306',
+    #         }
+    #     }" >> ecommerce/settings.py
 
     - name: Run Tests
       run: |
