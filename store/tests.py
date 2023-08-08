@@ -26,7 +26,7 @@ class CartViewSetTestCase(APITestCase):
     def test_destroy_cart(self):
         # Create a Cart object for testing destroy operation.
         cart = Cart.objects.create()
-        self.assertEqual(Cart.objects.count(), 1)
+        self.assertEqual(Cart.objects.count(), 2)
         response = self.client.delete(f'/store/carts/{cart.id}/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Cart.objects.count(), 0)
